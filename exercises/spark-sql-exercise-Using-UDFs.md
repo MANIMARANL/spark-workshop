@@ -33,4 +33,11 @@ spark
 ???
 ```
 
--->
+-->// Use .asNondeterministic to see the change
+val randgen = udf { (n: Long) => util.Random.nextInt() }
+spark
+.range(1)
+.withColumn("randgen", randgen('id))
+.select(randgen('id) === 'randgen)
+.show
+
